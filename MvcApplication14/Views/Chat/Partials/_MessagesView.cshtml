@@ -1,0 +1,10 @@
+﻿@model Queue<MvcApplication14.Models.Message>
+
+<div style="width: 500px; height: 400px">
+    @foreach (var item in Model)
+    {
+        <span>@item.RelatedUser.UserLogin:&nbsp;</span>
+        <span>@item.Text</span><br />
+    }
+
+</div>

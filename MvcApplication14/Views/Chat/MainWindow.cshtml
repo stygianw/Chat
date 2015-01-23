@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "MainWindow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+@section angular {
+    
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/app.js"></script>
+}
+<div ng-app="chat">
+    <div ng-controller="ChatController">
+        <h2>MainWindow</h2>
+        <div id="messages" style="float:left; width:600px; height: 400px; border: 1px solid black">
+            <div ng-repeat="message in model.messages track by $index">
+                <span>{{message.user}}: {{message.message}}</span>
+            </div>
+        </div>
+        <section id="userslist" ng-repeat="user in model.users" style="float:left; width:200px; height: 400px; border: 1px solid black">
+            <span>{{user}}</span>
+        </section>
+        <div id="sendmessage" style="float: left; width:600px; height: 200px; border: 1px solid red">
+            <form ng-submit="send()">
+                <input type="text" ng-model="message" name="message" style="width: 500px" />
+                <input type="submit" value="Send" />
+
+            </form>
+            
+        </div>
+        
+    </div>
+</div>

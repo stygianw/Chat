@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Register";
+}
+
+@model MvcApplication14.Models.ViewModels.RegisterViewModel
+
+
+    <div>
+        <h3>Зарегистрируйтесь: </h3>
+        <br />
+        @using (Html.BeginForm("Register"))
+        {
+            @Html.LabelFor(m => m.Login)
+            @Html.EditorFor(m => m.Login) <br />
+            @Html.LabelFor(m => m.Password)
+            @Html.EditorFor(m => m.Password) <br />
+            @Html.EditorFor(m => m.RetypePassword) <br />
+            @Html.LabelFor(m => m.RetypePassword)
+            <input type="submit" value="Зарегистрироваться" />
+            
+            @Html.ValidationSummary()
+            
+        }
+    </div>
+    
+
