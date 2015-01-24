@@ -18,11 +18,7 @@ namespace MvcApplication14.Helpers
             DatabaseDumpingCancellation = new CancellationTokenSource();
 	    }
 
-        public static void StartDumping()
-        {
-            DatabaseHelper.LoadContentToMemory();
-            Task startDumping = Task.Factory.StartNew(DatabaseHelper.StartDumpingToDatabase, DatabaseDumpingCancellation.Token, DatabaseDumpingCancellation.Token);
-        }
+        
 
         public static void StartUsersMonitoring()
         {

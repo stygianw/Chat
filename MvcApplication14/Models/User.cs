@@ -19,5 +19,6 @@ namespace MvcApplication14.Models
         public int MessageId { get; set; }
         public string Text { get; set; }
         public User RelatedUser { get; set; }
+        public DateTime Date { get; set; }
     }
 }

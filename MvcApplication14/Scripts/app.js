@@ -31,6 +31,7 @@ app.controller('ChatController', ['$http', '$scope', function ($http, $scope) {
     $scope.model = chatModel;
     $scope.message = '';
     $scope.send = function () {
+        
         $http.post('/Chat/RecordMessage', { message: $scope.message }).success(function () { $scope.message = ''});
 
     }

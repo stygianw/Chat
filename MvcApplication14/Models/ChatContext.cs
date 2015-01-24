@@ -25,7 +25,7 @@ namespace MvcApplication14.Models
             modelBuilder.Entity<User>().HasMany(m => m.Messages).WithRequired(m => m.RelatedUser);
 
             modelBuilder.Entity<Message>().HasKey(m => m.MessageId);
-            modelBuilder.Entity<Message>().Property(m => m.Text).HasMaxLength(500);
+            modelBuilder.Entity<Message>().Property(m => m.Text).IsRequired().HasMaxLength(500);
             modelBuilder.Entity<Message>().HasRequired(m => m.RelatedUser).WithMany(m => m.Messages);
 
 

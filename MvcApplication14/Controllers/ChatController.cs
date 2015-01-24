@@ -15,7 +15,7 @@ namespace MvcApplication14.Controllers
         //
         // GET: /Chat/
 
-        Action<string, string> asyncInvoke = new Action<string, string>(DatabaseHelper.AddMessage);
+        
 
         public ActionResult MainWindow()
         {
@@ -25,16 +25,19 @@ namespace MvcApplication14.Controllers
         public ActionResult GetMessages(int messno)
         {
             
-            var messagesToSend = DatabaseHelper.MessagesInMemory.Skip(messno).Select(m => new { message = m.Text, user = m.RelatedUser.UserLogin }).ToList();
-            return Json(new { messages = messagesToSend, messagesNumber = DatabaseHelper.MessagesInMemory.Count}, JsonRequestBehavior.AllowGet);
+            var messagesToSend = ChatCache.MemoryMessages.Skip(messno).Select(m => new { message = m.Text, user = m.RelatedUser.UserLogin }).ToList();
+            return Json(new { messages = messagesToSend, messagesNumber = ChatCache.MemoryMessages.Count}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult RecordMessage(string message)
         {
-
-            DatabaseHelper.AddMessage(Session["login"].ToString(), message);
-            return new HttpStatusCodeResult(200);
+            if (!String.IsNullOrEmpty(message))
+            {
+                ChatCache.AddMessage(Session["login"].ToString(), message);
+                return new HttpStatusCodeResult(200);
+            }
+            return Content("no message was sent", "text/plain");
         }
 
         public ActionResult GetUsersList()

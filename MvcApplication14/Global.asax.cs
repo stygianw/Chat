@@ -9,6 +9,8 @@ using System.Web.Routing;
 using System.Threading;
 using System.Threading.Tasks;
 using MvcApplication14.Helpers;
+using System.Data.Entity;
+using MvcApplication14.Models;
 
 namespace MvcApplication14
 {
@@ -25,9 +27,10 @@ namespace MvcApplication14
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AsyncHelper.StartDumping();
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ChatContext>());
+            //AsyncHelper.StartDumping();
             AsyncHelper.StartUsersMonitoring();
-            
+ //           ChatCache.AddMessage("1", "1");
         }
     }
 }

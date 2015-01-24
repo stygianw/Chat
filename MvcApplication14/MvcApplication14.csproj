@@ -133,7 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ActiveListHelper.cs" />
-    <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\ChatCache.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Models\ChatContext.cs" />
     <Compile Include="Models\User.cs" />
