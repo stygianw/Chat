@@ -10,15 +10,18 @@ namespace MvcApplication14.Helpers
     public static class AsyncHelper
     {
         public static CancellationTokenSource UserMonitorCancellation { get; private set; }
-        public static CancellationTokenSource DatabaseDumpingCancellation{ get; private set; }
+        public static CancellationTokenSource DroppingExpiredCancellation { get; private set; }
 
         static AsyncHelper()
 	    {
             UserMonitorCancellation = new CancellationTokenSource();
-            DatabaseDumpingCancellation = new CancellationTokenSource();
+            DroppingExpiredCancellation = new CancellationTokenSource();
 	    }
 
-        
+        public static void StartDroppingExpired()
+        {
+            Task dropExpired = Task.Factory.StartNew(ChatCache.DropExpired);
+        }
 
         public static void StartUsersMonitoring()
         {
