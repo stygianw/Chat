@@ -34,23 +34,48 @@ namespace MvcApplication14.Helpers
 
         public static void DropExpired()
         {
-            while (true)
+            if ((MemoryMessages.Last().Date - MemoryMessages.First().Date).Hours > 24)
             {
-                if (MemoryMessages.Count > 1000)
+                
+                int divider = MemoryMessages.Count / 2;
+                int border = MemoryMessages.Count;
+                
+                while (divider > 0 && divider < (MemoryMessages.Count - 1))
                 {
-                    TimeSpan diff = MemoryMessages.Last().Date - MemoryMessages.First().Date;
-                    double messagesPerMinute = MemoryMessages.Count / diff.Minutes;
-                    int messagesPer24hrs = (int)messagesPerMinute * 60 * 24;
+                    
+                    if (!MemoryMessages.ElementAt(divider).Date.IsOlderThan(24))
+                    {
+                        if (MemoryMessages.ElementAt(divider + 1).Date.IsOlderThan(24))
+                        {
+                            break;
+                        }
 
-                    MemoryMessages.RemoveRange(messagesPer24hrs, (MemoryMessages.Count - messagesPer24hrs));
+                        divider = (divider + border) / 2;
+                    }
+
+                    else
+                    {
+                        if (!MemoryMessages.ElementAt(divider - 1).Date.IsOlderThan(24))
+                        {
+                            break;
+                        }
+                        border = divider;
+                        divider = border / 2;
+                    }
+                    
                 }
-                Thread.Sleep(20000);
+                MemoryMessages = MemoryMessages.GetRange(0, divider);
             }
             
+        }
 
-            
-
-
+        private static bool IsOlderThan(this DateTime time, int hrs)
+        {
+            if ((DateTime.Now - time).Hours < hrs)
+            {
+                return false;
+            }
+            else return true;
         }
 
         public static void AddMessage(string login, string message)
