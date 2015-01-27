@@ -66,6 +66,7 @@ namespace MvcApplication14.Helpers
                 }
                 MemoryMessages = MemoryMessages.GetRange(0, divider);
             }
+            Thread.Sleep(20000);
             
         }
 
