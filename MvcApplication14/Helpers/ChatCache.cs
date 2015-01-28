@@ -38,31 +38,21 @@ namespace MvcApplication14.Helpers
             {
                 
                 int divider = MemoryMessages.Count / 2;
-                int border = MemoryMessages.Count;
-                
-                while (divider > 0 && divider < (MemoryMessages.Count - 1))
+                int upperborder = MemoryMessages.Count, lowerborder = 0;
+                int iterlimit = (int)Math.Round(Math.Log(MemoryMessages.Count, 2));
+
+                for (int i = 0; i < iterlimit; i++)
                 {
-                    
                     if (!MemoryMessages.ElementAt(divider).Date.IsOlderThan(24))
                     {
-                        if (MemoryMessages.ElementAt(divider + 1).Date.IsOlderThan(24))
-                        {
-                            break;
-                        }
-
-                        divider = (divider + border) / 2;
+                        lowerborder = divider;
                     }
 
                     else
                     {
-                        if (!MemoryMessages.ElementAt(divider - 1).Date.IsOlderThan(24))
-                        {
-                            break;
-                        }
-                        border = divider;
-                        divider = border / 2;
+                        upperborder = divider;
                     }
-                    
+                    divider = (lowerborder + upperborder) / 2;
                 }
                 MemoryMessages = MemoryMessages.GetRange(0, divider);
             }
