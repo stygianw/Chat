@@ -62,11 +62,8 @@ namespace MvcApplication14.Helpers
 
         private static bool IsOlderThan(this DateTime time, int hrs)
         {
-            if ((DateTime.Now - time).Hours < hrs)
-            {
-                return false;
-            }
-            else return true;
+            return (DateTime.Now - time).Hours < hrs;
+            
         }
 
         public static void AddMessage(string login, string message)
