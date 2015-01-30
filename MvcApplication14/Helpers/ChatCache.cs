@@ -34,14 +34,14 @@ namespace MvcApplication14.Helpers
 
         public static void DropExpired()
         {
-            if ((MemoryMessages.Last().Date - MemoryMessages.First().Date).Hours > 24)
+            if ((DateTime.Now - MemoryMessages.First().Date).Hours > 24)
             {
                 
                 int divider = MemoryMessages.Count / 2;
                 int upperborder = MemoryMessages.Count, lowerborder = 0;
-                int iterlimit = (int)Math.Round(Math.Log(MemoryMessages.Count, 2));
+                //int iterlimit = (int)Math.Round(Math.Log(MemoryMessages.Count, 2));
 
-                for (int i = 0; i < iterlimit; i++)
+                while (upperborder - lowerborder > 1)
                 {
                     if (!MemoryMessages.ElementAt(divider).Date.IsOlderThan(24))
                     {
@@ -52,7 +52,7 @@ namespace MvcApplication14.Helpers
                     {
                         upperborder = divider;
                     }
-                    divider = (lowerborder + upperborder) / 2;
+                    divider = lowerborder + ((upperborder - lowerborder) / 2);
                 }
                 MemoryMessages = MemoryMessages.GetRange(0, divider);
             }
