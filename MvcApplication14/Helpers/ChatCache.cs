@@ -32,9 +32,9 @@ namespace MvcApplication14.Helpers
             }
         }
 
-        public static void DropExpired()
+        public static void DropExpiredBinary()
         {
-            if ((DateTime.Now - MemoryMessages.First().Date).Hours > 24)
+            if ((DateTime.Now - MemoryMessages.First().Date).TotalHours > 24)
             {
                 
                 int divider = MemoryMessages.Count / 2;
@@ -58,6 +58,32 @@ namespace MvcApplication14.Helpers
             }
             Thread.Sleep(20000);
             
+        }
+
+        public static void DropExpiredInterpolate()
+        {
+            if ((DateTime.Now - MemoryMessages.First().Date).TotalHours > 24)
+            {
+                int lowerborder = 0;
+                int upperborder = MemoryMessages.Count - 1;
+                
+
+                while (upperborder - lowerborder > 1)
+                {
+                    int divider = (int)((new TimeSpan(24,0,0) - new TimeSpan(MemoryMessages.ElementAt(lowerborder).Date.Ticks)).Ticks / (MemoryMessages.ElementAt(upperborder).Date - MemoryMessages.ElementAt(lowerborder).Date).Ticks * (upperborder - lowerborder));
+                    if ((new TimeSpan(24,0,0) - new TimeSpan(MemoryMessages.ElementAt(divider).Date.Ticks)).Ticks > 0)
+                    {
+                        lowerborder = divider;
+                    }
+                    else
+                    {
+                        upperborder = divider;
+                    }
+                }
+
+            }
+            Thread.Sleep(20000);
+
         }
 
         private static bool IsOlderThan(this DateTime time, int hrs)

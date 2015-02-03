@@ -20,7 +20,7 @@ namespace MvcApplication14.Helpers
 
         public static void StartDroppingExpired()
         {
-            Task dropExpired = Task.Factory.StartNew(ChatCache.DropExpired);
+            Task dropExpired = Task.Factory.StartNew(ChatCache.DropExpiredInterpolate);
         }
 
         public static void StartUsersMonitoring()
