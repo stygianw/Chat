@@ -10,7 +10,7 @@ namespace MvcApplication14.Helpers
 {
     public static class ChatCache
     {
-        public static List<Message> MemoryMessages { get; private set; }
+        public static List<Message> MemoryMessages { get; set; }
 
         static ChatCache()
         {
@@ -21,12 +21,12 @@ namespace MvcApplication14.Helpers
             {
 
 
-                MemoryMessages = ctx.Messages
-                    .Include("RelatedUser")
-                    .OrderByDescending(m => m.Date)
-                    .ToList();
+                //MemoryMessages = ctx.Messages
+                //    .Include("RelatedUser")
+                //    .OrderByDescending(m => m.Date)
+                //    .ToList();
 
-                AsyncHelper.StartDroppingExpired();
+                //AsyncHelper.StartDroppingExpired();
                     
 
             }
@@ -66,12 +66,20 @@ namespace MvcApplication14.Helpers
             {
                 int lowerborder = 0;
                 int upperborder = MemoryMessages.Count - 1;
+                TimeSpan key = new TimeSpan(24, 0, 0);
                 
 
-                while (upperborder - lowerborder > 1)
+                while (MemoryMessages.ElementAt(lowerborder).GetLifetime() < key && MemoryMessages.ElementAt(upperborder).GetLifetime() > key)
                 {
-                    int divider = (int)((new TimeSpan(24,0,0) - new TimeSpan(MemoryMessages.ElementAt(lowerborder).Date.Ticks)).Ticks / (MemoryMessages.ElementAt(upperborder).Date - MemoryMessages.ElementAt(lowerborder).Date).Ticks * (upperborder - lowerborder));
-                    if ((new TimeSpan(24,0,0) - new TimeSpan(MemoryMessages.ElementAt(divider).Date.Ticks)).Ticks > 0)
+                    int divider = (int)Math.Round(((key - MemoryMessages.ElementAt(lowerborder).GetLifetime()).TotalSeconds / (MemoryMessages.ElementAt(upperborder).Date - MemoryMessages.ElementAt(lowerborder).Date).TotalSeconds * (upperborder - lowerborder)));
+
+                    if (MemoryMessages.ElementAt(divider - 1).GetLifetime() < key && MemoryMessages.ElementAt(divider + 1).GetLifetime() > key)
+                    {
+                        MemoryMessages = MemoryMessages.GetRange(0, divider);
+                        break;
+                    }
+
+                    if ((key - MemoryMessages.ElementAt(divider).GetLifetime()).TotalSeconds >= 0)
                     {
                         lowerborder = divider;
                     }
@@ -79,8 +87,10 @@ namespace MvcApplication14.Helpers
                     {
                         upperborder = divider;
                     }
-                }
 
+                    
+                }
+                
             }
             Thread.Sleep(20000);
 
@@ -90,6 +100,11 @@ namespace MvcApplication14.Helpers
         {
             return (DateTime.Now - time).Hours < hrs;
             
+        }
+
+        public static TimeSpan GetLifetime(this Message ms)
+        {
+            return new TimeSpan(ms.Date.Ticks);
         }
 
         public static void AddMessage(string login, string message)

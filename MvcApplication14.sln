@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication14", "MvcApplication14\MvcApplication14.csproj", "{8C184056-087A-41BE-9C99-9CA78CD87079}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{FBB0D34E-4FB9-49BF-AB5E-EF040D741B5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8C184056-087A-41BE-9C99-9CA78CD87079}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C184056-087A-41BE-9C99-9CA78CD87079}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C184056-087A-41BE-9C99-9CA78CD87079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB0D34E-4FB9-49BF-AB5E-EF040D741B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB0D34E-4FB9-49BF-AB5E-EF040D741B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB0D34E-4FB9-49BF-AB5E-EF040D741B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB0D34E-4FB9-49BF-AB5E-EF040D741B5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
