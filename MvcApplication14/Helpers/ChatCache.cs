@@ -66,20 +66,20 @@ namespace MvcApplication14.Helpers
             {
                 int lowerborder = 0;
                 int upperborder = MemoryMessages.Count - 1;
-                TimeSpan key = new TimeSpan(24, 0, 0);
+                DateTime key = DateTime.Now.AddHours(-24);
                 
 
-                while (MemoryMessages.ElementAt(lowerborder).GetLifetime() < key && MemoryMessages.ElementAt(upperborder).GetLifetime() > key)
+                while (MemoryMessages.ElementAt(lowerborder).Date < key && MemoryMessages.ElementAt(upperborder).Date > key)
                 {
-                    int divider = (int)Math.Round(((key - MemoryMessages.ElementAt(lowerborder).GetLifetime()).TotalSeconds / (MemoryMessages.ElementAt(upperborder).Date - MemoryMessages.ElementAt(lowerborder).Date).TotalSeconds * (upperborder - lowerborder)));
+                    int divider = (int)Math.Round(((key - MemoryMessages.ElementAt(lowerborder).Date).TotalSeconds / (MemoryMessages.ElementAt(upperborder).Date - MemoryMessages.ElementAt(lowerborder).Date).TotalSeconds * (upperborder - lowerborder)));
 
-                    if (MemoryMessages.ElementAt(divider - 1).GetLifetime() < key && MemoryMessages.ElementAt(divider + 1).GetLifetime() > key)
+                    if (MemoryMessages.ElementAt(divider - 1).Date < key && MemoryMessages.ElementAt(divider + 1).Date > key)
                     {
-                        MemoryMessages = MemoryMessages.GetRange(0, divider);
+                        MemoryMessages = MemoryMessages.GetRange(divider, MemoryMessages.Count - divider);
                         break;
                     }
 
-                    if ((key - MemoryMessages.ElementAt(divider).GetLifetime()).TotalSeconds >= 0)
+                    if ((key - MemoryMessages.ElementAt(divider).Date).TotalSeconds < 0)
                     {
                         lowerborder = divider;
                     }
@@ -92,7 +92,7 @@ namespace MvcApplication14.Helpers
                 }
                 
             }
-            Thread.Sleep(20000);
+           // Thread.Sleep(20000);
 
         }
 

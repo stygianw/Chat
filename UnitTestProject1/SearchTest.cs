@@ -15,9 +15,9 @@ namespace UnitTestProject1
         public void TestDropExpiredInterpolate()
         {
             List<Message> TestMessages = new List<Message>();
-            for (int i = 0; i < 40; i++)
+            for (int i = 40 - 1; i >= 0; i--)
             {
-                TestMessages.Add(new Message() { Date = new DateTime(new TimeSpan(i, i / 2, 0).Ticks) });
+                TestMessages.Add(new Message() { Date = DateTime.Now.AddHours(i * (-1)) });
             }
 
             MvcApplication14.Helpers.ChatCache.MemoryMessages = TestMessages;
@@ -25,7 +25,7 @@ namespace UnitTestProject1
 
             foreach (var item in ChatCache.MemoryMessages)
             {
-                Assert.IsTrue(new TimeSpan(item.Date.Ticks) <= new TimeSpan(24, 0, 0));
+                Assert.IsTrue(item.Date >= DateTime.Now.AddHours(-25));
             }
         }
     }
